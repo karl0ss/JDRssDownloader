@@ -2,7 +2,11 @@
     "JDUserName": "",
     "JDPassword": "",
     "RSSFeed": "",
-    "Quality": "720",
     "Autostart": false,
-    "Shows": []
+    "Shows": [
+        {
+            "Name": "",
+            "Quality": "720"
+        }
+    ]
 }

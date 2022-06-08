@@ -9,17 +9,17 @@ function filterFeed(fileName) {
 
     myshowlist.forEach(show => {
         try {
-            let list_filtered_for_show = feed.filter(item => item.title.includes(show))
+            let list_filtered_for_show = feed.filter(item => item.title.includes(show.Name))
             let extracted_urls_for_show = extractUrls(list_filtered_for_show[0]["content:encoded"]);
             let urls_with_HEVC_in_url = extracted_urls_for_show.filter(item => item.includes('HEVC'))
-            let urls_with_quality_in_url = urls_with_HEVC_in_url.filter(item => item.includes(JSON.parse(fs.readFileSync('config.json')).Quality))
+            let urls_with_quality_in_url = urls_with_HEVC_in_url.filter(item => item.includes(show.Quality))
             let urls_without_torrent_in_url = urls_with_quality_in_url.filter(item => !item.includes('torrent'))
             log.info(show + ' - ' + urls_without_torrent_in_url)
             linkAdder(urls_without_torrent_in_url)
+            // console.log(list_filtered_for_show)
         } catch (error) {
-            log.info(show + ' not on feed')
+            log.info(show.Name + ' not on feed')
         }
-
     })
 }
 
