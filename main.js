@@ -1,5 +1,4 @@
 // Import dependencies
-require('dotenv').config()
 const fs = require("fs");
 const Parser = require("rss-parser");
 const { filterFeed } = require("./feed");
@@ -12,7 +11,7 @@ const { filterFeed } = require("./feed");
     const parser = new Parser();
 
     // Get all the items in the RSS feed
-    const feed = await parser.parseURL(JSON.parse(fs.readFileSync('config.json')).RSS_Feed);
+    const feed = await parser.parseURL(JSON.parse(fs.readFileSync('config.json')).RSSFeed);
 
     let items = [];
 

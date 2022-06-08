@@ -1,5 +1,7 @@
 {
-    "RSS_Feed": "",
+    "JDUserName": "",
+    "JDPassword": "",
+    "RSSFeed": "",
     "Quality": "720",
     "Autostart": false,
     "Shows": []
