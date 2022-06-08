@@ -14,9 +14,9 @@ function filterFeed(fileName) {
             let urls_with_HEVC_in_url = extracted_urls_for_show.filter(item => item.includes('HEVC'))
             let urls_with_quality_in_url = urls_with_HEVC_in_url.filter(item => item.includes(show.Quality))
             let urls_without_torrent_in_url = urls_with_quality_in_url.filter(item => !item.includes('torrent'))
-            log.info(show + ' - ' + urls_without_torrent_in_url)
+            log.info(show.Name + ' - ' + urls_without_torrent_in_url)
             linkAdder(urls_without_torrent_in_url)
-            // console.log(list_filtered_for_show)
+            // console.log(urls_without_torrent_in_url)
         } catch (error) {
             log.info(show.Name + ' not on feed')
         }
