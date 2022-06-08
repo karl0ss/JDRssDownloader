@@ -12,9 +12,30 @@ There is a ``config-sample.json`` file that needs to be renamed to ``config.json
 - JDUserName - Your MyJDownloader Username
 - JDPassword - Your MyJdownloader Password
 - RSSFeed - The url to the rss feed you want to watch (Only tested with - https://rlsbb.cc/feed/)
-- Quality - Resolution of the download you want (720/1080/2160)
+
 - Autostart - Tells JDownloader to add and start the downloads straight away (true/false)
-- Shows - This needs to be a comma seperated list of the shows you want to check for.
+- Shows - This needs to be a comma seperated list of json objects of the show and quality you want to check for.
+
+An example shown below
+
+```
+{
+    "JDUserName": "User",
+    "JDPassword": "Pass",
+    "RSSFeed": "https://rlsbb.cc/feed/",
+    "Autostart": false,
+    "Shows": [
+        {
+            "Name": "Obi-Wan Kenobi",
+            "Quality": "1080"
+        },
+        {
+            "Name": "Taskmaster",
+            "Quality": "720"
+        }
+    ]
+}
+```
 
 ## Execution
 For basic usage you can just navigate into the folder and run -
