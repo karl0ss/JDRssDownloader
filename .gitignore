@@ -4,3 +4,4 @@ releasebb.json
 config.json
 package-lock.json
 jdrssdownloader.log
+.vscode/launch.json
