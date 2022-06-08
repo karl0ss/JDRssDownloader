@@ -12,8 +12,8 @@ function filterFeed(fileName) {
             let list_filtered_for_show = feed.filter(item => item.title.includes(show))
             let extracted_urls_for_show = extractUrls(list_filtered_for_show[0]["content:encoded"]);
             let urls_with_HEVC_in_url = extracted_urls_for_show.filter(item => item.includes('HEVC'))
-            let urls_with_720_in_url = urls_with_HEVC_in_url.filter(item => item.includes(JSON.parse(fs.readFileSync('config.json')).Quality))
-            let urls_without_torrent_in_url = urls_with_720_in_url.filter(item => !item.includes('torrent'))
+            let urls_with_quality_in_url = urls_with_HEVC_in_url.filter(item => item.includes(JSON.parse(fs.readFileSync('config.json')).Quality))
+            let urls_without_torrent_in_url = urls_with_quality_in_url.filter(item => !item.includes('torrent'))
             log.info(show + ' - ' + urls_without_torrent_in_url)
             linkAdder(urls_without_torrent_in_url)
         } catch (error) {
