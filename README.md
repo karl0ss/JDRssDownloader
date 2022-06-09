@@ -4,6 +4,15 @@ JDownloader 2 is a great tool, but since V1 has been missing a way to automatica
 
 I have put together this simple project to allow me to do that, people may find useful.
 
+- Automatically check RSS feed and send to JDownloader
+- Uses MyJDownloader API to allow running on separate system
+- Local file cache of RSS feed
+- Specify time to check RSS feed
+- Specify time to check file cache to send links to JDownloader
+- Ability to add multiple shows to check for
+- Ability to check for different qualities per show you are looking for
+  
+
 You will need NodeJS installed, then you can checkout this repo.
 
 ## Configuration

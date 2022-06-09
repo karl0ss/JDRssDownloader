@@ -9,5 +9,6 @@ let JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
 log.info('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
 log.info('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
 
+
 setInterval(feedUpdater, RSSFeedRefreshMins * 60000);
 setInterval(filterFeed, JDPostLinksMins * 60000);

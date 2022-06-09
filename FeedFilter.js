@@ -4,9 +4,8 @@ const { getLinksFromURL } = require('./LinkGrabber')
 const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
 async function filterFeed() {
-    fileName = './releasebb.json'
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
-    let feed = JSON.parse(fs.readFileSync(fileName));
+    let feed = JSON.parse(fs.readFileSync(global.fileName));
 
     myshowlist.forEach(async show => {
         try {
