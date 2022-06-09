@@ -5,9 +5,7 @@ const { filterFeed } = require("./FeedFilter");
 const lodash = require('lodash');
 const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
-(async function main() {
-
-
+async function feedUpdater() {
     // Make a new RSS Parser
     const parser = new Parser();
 
@@ -30,5 +28,11 @@ const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.lo
     fs.writeFileSync(fileName, JSON.stringify(updatedArray));
 
     // run next part
-    filterFeed(fileName)
-})();
+    // return fileName
+    // filterFeed(fileName)
+}
+// ();
+
+module.exports = {
+    feedUpdater
+}
