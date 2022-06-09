@@ -3,7 +3,7 @@ const fs = require("fs");
 const Parser = require("rss-parser");
 const { filterFeed } = require("./feed");
 const lodash = require('lodash');
-
+const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
     (async function main() {
 
@@ -25,7 +25,7 @@ const lodash = require('lodash');
         let updatedArray = lodash.unionBy(feed.items, items, 'title');
         
         // Save the file
-        console.log(updatedArray.length)
+        log.info(updatedArray.length + ' items in file cache')
         fs.writeFileSync(fileName, JSON.stringify(updatedArray));
 
         // run next part
