@@ -1,6 +1,6 @@
 # JDRssDownloader
 
-JDownloder 2 is a great tool, but since V1 has been missing a way to automatically download from RSS feeds, and filter downloads to only download HEVC files.
+JDownloader 2 is a great tool, but since V1 has been missing a way to automatically download from RSS feeds, and filter downloads to only download HEVC files.
 
 I have put together this simple project to allow me to do that, people may find useful.
 
@@ -10,11 +10,12 @@ You will need NodeJS installed, then you can checkout this repo.
 There is a ``config-sample.json`` file that needs to be renamed to ``config.json``, after this you can update it with your required settings.
 
 - JDUserName - Your MyJDownloader Username
-- JDPassword - Your MyJdownloader Password
+- JDPassword - Your MyJDownloader Password
 - RSSFeed - The url to the rss feed you want to watch (Only tested with - https://rlsbb.cc/feed/)
-
+- RSSFeedRefreshMins - How often to poll your rss feed down to local file cache
+- JDPostLinksMins": How often to check your file cache for your shows and send found links to JDownloader
 - Autostart - Tells JDownloader to add and start the downloads straight away (true/false)
-- Shows - This needs to be a comma seperated list of json objects of the show and quality you want to check for.
+- Shows - This needs to be a comma separated list of json objects of the show and quality you want to check for.
 
 An example shown below
 
@@ -23,6 +24,8 @@ An example shown below
     "JDUserName": "User",
     "JDPassword": "Pass",
     "RSSFeed": "https://rlsbb.cc/feed/",
+    "RSSFeedRefreshMins": 10,
+    "JDPostLinksMins": 180,
     "Autostart": false,
     "Shows": [
         {
@@ -40,9 +43,9 @@ An example shown below
 ## Execution
 For basic usage you can just navigate into the folder and run -
 - ``npm i`` to install the requirements.
-- ``node main.js`` This will execute the process and add the links if they are found.
+- ``node JDRssDownloader.js`` This will execute the process and add the links if they are found.
 
-For advanced usage, you can set it to run every hour or something using a cron job, thats what I have setup.
+My suggestion would be to use pm2 so it can run "in the background"
 
 ## Issues
 
