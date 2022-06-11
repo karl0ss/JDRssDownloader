@@ -1,21 +1,19 @@
 # JDRssDownloader
 
-JDownloader 2 is a great tool, but since V1 has been missing a way to automatically download from RSS feeds, and filter downloads to only download HEVC files.
+JDownloader 2 is a great tool, but since V1 has been missing a way to automatically download from RSS feeds, and filter downloads to only download what you want, in my case 720p HEVC files, MeGusta rips by preference.
 
 I have put together this simple project to allow me to do that, people may find useful.
 
-- Automatically check RSS feed and send to JDownloader
+- Automatically check an RSS feed and send to JDownloader
 - Uses MyJDownloader API to allow running on separate system
 - Local file cache of RSS feed
 - Specify time to check RSS feed
 - Specify time to check file cache to send links to JDownloader
 - Ability to add multiple shows to check for
 - Ability to check for different qualities per show you are looking for
-  
+ 
 
-You will need NodeJS installed, then you can checkout this repo.
-
-## Configuration
+# Configuration
 There is a ``config-sample.json`` file that needs to be renamed to ``config.json``, after this you can update it with your required settings.
 
 - JDUserName - Your MyJDownloader Username
@@ -48,14 +46,29 @@ An example shown below
     ]
 }
 ```
+# Running
 
-## Execution
+## Release Version
+Either download the version on the releases, as well as the `config-sample.json` and run execute, this is the simplest way, but may not be the latest code, and will not run in the background
+
+## Source Version
+You will need NodeJS installed, then you can checkout this repo.
+
 For basic usage you can just navigate into the folder and run -
 - ``npm i`` to install the requirements.
 - ``node JDRssDownloader.js`` This will execute the process and add the links if they are found.
 
 My suggestion would be to use pm2 so it can run "in the background"
 
-## Issues
+# Issues
 
-Not alot of testing has gone into this, and I threw it together today in about 2 hours, so there are bound to be issues, please open them and let me know if you find any.
+Not alot of testing has gone into this, and I threw it together in a few hours, and only for my use case, so there are bound to be issues, please open them and let me know if you find any.
+
+
+# Future
+I have some ideas to make this a bit smarter, at the moment it doesn't clean the cache at all, and will keep sending the same links to JDownloader once they are in the cache, I am working on cleaning them out, but for now the best thing to do it to set JDownloader to automatically mark already downloaded links as finished, then it doesn't bother redownloading all the time.
+
+Also want to add the ability to look at multiple RSS feeds, this seems quite easy, and I will do in the next couple of weeks.
+
+# Thanks
+Thank for all the people who made any of the modules that I used to create this.
