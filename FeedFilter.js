@@ -1,11 +1,10 @@
 const fs = require('fs')
 const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
-const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
-async function filterFeed(fileName) {
+async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
-    let feed = JSON.parse(fs.readFileSync(fileName));
+    let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
 
     myshowlist.forEach(async show => {
         try {
@@ -44,7 +43,10 @@ async function filterFeed(fileName) {
         } catch (error) {
             log.error('Something went wrong ' + error)
         }
+
     })
+    // log.info('Wiping feed cache')
+    // fs.writeFileSync(global.fileName, JSON.stringify('[]'));
 }
 
 module.exports = {

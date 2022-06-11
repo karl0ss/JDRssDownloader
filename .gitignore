@@ -4,3 +4,7 @@ config.json
 package-lock.json
 jdrssdownloader.log
 .vscode/launch.json
+feedCache.json
+dist/jdrssdownloader-linux
+dist/jdrssdownloader-win.exe
+dist/jdrssdownloader-macos
