@@ -5,7 +5,7 @@ const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.lo
 
 async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
-    let feed = JSON.parse(fs.readFileSync(global.fileName));
+    let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
 
     myshowlist.forEach(async show => {
         try {
@@ -44,7 +44,10 @@ async function filterFeed() {
         } catch (error) {
             log.error('Something went wrong ' + error)
         }
+
     })
+    // log.info('Wiping feed cache')
+    // fs.writeFileSync(global.fileName, JSON.stringify('[]'));
 }
 
 module.exports = {

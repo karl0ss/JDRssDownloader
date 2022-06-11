@@ -12,18 +12,15 @@ async function feedUpdater() {
 
     let items = [];
 
-    // Clean up the string and replace reserved characters
-    global.fileName = `${feed.title.replace(/\s+/g, "-").replace(/[/\\?%*:|"<>]/g, '').toLowerCase()}.json`;
-
-    if (fs.existsSync(global.fileName)) {
-        items = require(`./${global.fileName}`);
+    if (fs.existsSync('./feedCache.json')) {
+        items = JSON.parse(fs.readFileSync('./feedCache.json'))
     }
     // Compare existing cache and new items and merge differences
     let updatedArray = lodash.unionBy(feed.items, items, 'title');
 
     // Save the file
     log.info(updatedArray.length + ' items in file cache')
-    fs.writeFileSync(fileName, JSON.stringify(updatedArray));
+    fs.writeFileSync('./feedCache.json', JSON.stringify(updatedArray));
 
 
 }
