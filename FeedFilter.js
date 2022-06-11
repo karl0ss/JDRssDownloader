@@ -1,7 +1,6 @@
 const fs = require('fs')
 const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
-const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
 async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows

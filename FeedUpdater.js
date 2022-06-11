@@ -1,7 +1,6 @@
 const fs = require("fs");
 const Parser = require("rss-parser");
 const lodash = require('lodash');
-const log = require('simple-node-logger').createSimpleLogger('jdrssdownloader.log');
 
 async function feedUpdater() {
     // Make a new RSS Parser
