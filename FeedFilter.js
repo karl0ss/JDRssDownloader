@@ -7,10 +7,11 @@ async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
     let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
+    let retry_show_cache = []
 
 
     if (hevcSwitch) {
-        myshowlist.forEach(async show => {
+        for (let show of myshowlist) {
             try {
                 // Find show on feed
                 let list_filtered_for_show = feed.filter(item => item.title.includes(show.Name))
@@ -39,9 +40,11 @@ async function filterFeed() {
                         linkAdder(download_list)
                     } else {
                         // No HEVC links found
-                        log.info(download_list.length + ' HEVC links for ' + show.Name + ' have been found')
+                        log.info(download_list.length + ' HEVC links for ' + show.Name + ' have been found, will recheck next time.')
+                        for (let feed_item of list_filtered_for_show) {
+                            retry_show_cache.push(feed_item)
+                        }
                     }
-
                 } else {
                     // Show not found on the current feed cache
                     log.info(show.Name + ' not on feed')
@@ -49,10 +52,9 @@ async function filterFeed() {
             } catch (error) {
                 log.error('Something went wrong ' + error)
             }
-
-        })
+        }
     } else {
-        myshowlist.forEach(async show => {
+        for (let show of myshowlist) {
             try {
                 // Find show on feed
                 let list_filtered_for_show = feed.filter(item => item.title.includes(show.Name))
@@ -73,9 +75,11 @@ async function filterFeed() {
                         linkAdder(download_list)
                     } else {
                         // No links found
-                        log.info(download_list.length + ' links for ' + show.Name + ' have been found')
+                        log.info(download_list.length + ' HEVC links for ' + show.Name + ' have been found, will recheck next time.')
+                        for (let feed_item of list_filtered_for_show) {
+                            retry_show_cache.push(feed_item)
+                        }
                     }
-
                 } else {
                     // Show not found on the current feed cache
                     log.info(show.Name + ' not on feed')
@@ -83,13 +87,10 @@ async function filterFeed() {
             } catch (error) {
                 log.error('Something went wrong ' + error)
             }
-
-        })
+        }
     }
-
-    //
     log.info('Wiping feed cache')
-    fs.writeFileSync('./feedCache.json', JSON.stringify('[]'));
+    fs.writeFileSync('./feedCache.json', JSON.stringify(retry_show_cache));
 }
 
 module.exports = {
