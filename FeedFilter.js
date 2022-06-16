@@ -8,6 +8,7 @@ async function filterFeed() {
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
     let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
     let retry_show_cache = []
+    let urls_to_check = []
 
 
     for (let show of myshowlist) {
