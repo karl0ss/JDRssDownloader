@@ -21,8 +21,8 @@ async function filterFeed() {
                 let full_link_list_from_page = await getLinksFromURL(list_filtered_for_show[0].link)
                 if (hevcSwitch) {
                     // Only get urls with HEVC in name
-                    let urls_with_HEVC_in_url = full_link_list_from_page.filter(item => item.includes('HEVC'))
-                    if (urls_with_HEVC_in_url.length == 0) {
+                    urls_to_check = full_link_list_from_page.filter(item => item.includes('HEVC'))
+                    if (urls_to_check.length == 0) {
                         // If no urls with HEVC check for H265
                         urls_to_check = full_link_list_from_page.filter(item => item.includes('H265'))
                     }
