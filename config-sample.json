@@ -5,6 +5,7 @@
     "RSSFeedRefreshMins": 10,
     "JDPostLinksMins": 180,
     "Autostart": false,
+    "OnlyHEVC": true,
     "Shows": [
         {
             "Name": "",

@@ -11,17 +11,19 @@ I have put together this simple project to allow me to do that, people may find 
 - Specify time to check file cache to send links to JDownloader
 - Ability to add multiple shows to check for
 - Ability to check for different qualities per show you are looking for
- 
+- Ability to turn OFF only HEVC search
 
 # Configuration
-There is a ``config-sample.json`` file that needs to be renamed to ``config.json``, after this you can update it with your required settings.
+
+There is a `config-sample.json` file that needs to be renamed to `config.json`, after this you can update it with your required settings.
 
 - JDUserName - Your MyJDownloader Username
 - JDPassword - Your MyJDownloader Password
-- RSSFeed - The url to the rss feed you want to watch (Only tested with - https://rlsbb.cc/feed/)
+- RSSFeed - The url to the rss feed you want to watch (Only tested with - rlsbb)
 - RSSFeedRefreshMins - How often to poll your rss feed down to local file cache
-- JDPostLinksMins": How often to check your file cache for your shows and send found links to JDownloader
+- JDPostLinksMins - How often to check your file cache for your shows and send found links to JDownloader
 - Autostart - Tells JDownloader to add and start the downloads straight away (true/false)
+- OnlyHEVC - If false, this will download any files that it finds on the post that matches the quality (true/false)
 - Shows - This needs to be a comma separated list of json objects of the show and quality you want to check for.
 
 An example shown below
@@ -30,10 +32,11 @@ An example shown below
 {
     "JDUserName": "User",
     "JDPassword": "Pass",
-    "RSSFeed": "https://rlsbb.cc/feed/",
+    "RSSFeed": "https://mypage.com/feed/",
     "RSSFeedRefreshMins": 10,
     "JDPostLinksMins": 180,
     "Autostart": false,
+    "OnlyHEVC": true,
     "Shows": [
         {
             "Name": "Obi-Wan Kenobi",
@@ -46,17 +49,21 @@ An example shown below
     ]
 }
 ```
+
 # Running
 
 ## Release Version
+
 Either download the version on the releases, as well as the `config-sample.json` and run execute, this is the simplest way, but may not be the latest code, and will not run in the background
 
 ## Source Version
+
 You will need NodeJS installed, then you can checkout this repo.
 
 For basic usage you can just navigate into the folder and run -
-- ``npm i`` to install the requirements.
-- ``node JDRssDownloader.js`` This will execute the process and add the links if they are found.
+
+- `npm i` to install the requirements.
+- `node JDRssDownloader.js` This will execute the process and add the links if they are found.
 
 My suggestion would be to use pm2 so it can run "in the background"
 
@@ -64,11 +71,10 @@ My suggestion would be to use pm2 so it can run "in the background"
 
 Not alot of testing has gone into this, and I threw it together in a few hours, and only for my use case, so there are bound to be issues, please open them and let me know if you find any.
 
-
 # Future
-I have some ideas to make this a bit smarter, at the moment it doesn't clean the cache at all, and will keep sending the same links to JDownloader once they are in the cache, I am working on cleaning them out, but for now the best thing to do it to set JDownloader to automatically mark already downloaded links as finished, then it doesn't bother redownloading all the time.
 
-Also want to add the ability to look at multiple RSS feeds, this seems quite easy, and I will do in the next couple of weeks.
+I have some ideas to make this a bit smarter and I want to add the ability to look at multiple RSS feeds, this seems quite easy, and I will do in the next couple of weeks.
 
 # Thanks
+
 Thank for all the people who made any of the modules that I used to create this.
