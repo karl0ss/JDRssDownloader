@@ -9,13 +9,15 @@ global.log = require('simple-node-logger').createSimpleLogger({
 });
 
 async function main() {
-    let RSSFeedRefreshMins = JSON.parse(fs.readFileSync('config.json')).RSSFeedRefreshMins
-    let JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
-
     log.info('Running JDRssDownloader version ' + version)
+    try {
+        RSSFeedRefreshMins = JSON.parse(fs.readFileSync('config.json')).RSSFeedRefreshMins
+        JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
+    } catch (error) {
+        log.error('config.json file is missing.')
+    }
     log.info('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
     log.info('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
-
 
     setInterval(await feedUpdater, RSSFeedRefreshMins * 60000);
     setInterval(await filterFeed, JDPostLinksMins * 60000);
