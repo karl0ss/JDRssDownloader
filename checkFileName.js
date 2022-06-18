@@ -1,12 +1,16 @@
 function checkFileName(urls) {
-    let urlList = []
+    let urlObj = {
+        "fileName": "",
+        "urlList": []
+    }
     urls.forEach(url => {
         let cut = url.match(/([^\/]*$)/mg);
         if (cut[0] !== '') {
-            urlList.push(url)
+            urlObj.fileName = cut[0].replace('.html', '')
+            urlObj.urlList.push(url)
         }
     });
-    return urlList
+    return urlObj
 }
 
 module.exports = { checkFileName }
