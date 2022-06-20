@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "JDUserName": {
+      "type": "string"
+    },
+    "JDPassword": {
+      "type": "string"
+    },
+    "RSSFeed": {
+      "type": "string"
+    },
+    "RSSFeedRefreshMins": {
+      "type": "number"
+    },
+    "JDPostLinksMins": {
+      "type": "number"
+    },
+    "Autostart": {
+      "type": "boolean"
+    },
+    "OnlyHEVC": {
+      "type": "boolean"
+    },
+    "Shows": {
+ "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "Name": {
+        "type": "string"
+      },
+      "Quality": {
+        "type": "string"
+      }
+    },
+    "required": ["Name", "Quality"]
+  }
+    }
+  },
+  "required": [
+    "JDUserName",
+    "JDPassword",
+    "RSSFeed",
+    "RSSFeedRefreshMins",
+    "JDPostLinksMins",
+    "Autostart",
+    "OnlyHEVC",
+    "Shows"
+  ]
+}

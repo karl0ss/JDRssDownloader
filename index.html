@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta charset="utf-8">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.9.0/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.9.0/jsoneditor.min.js"></script>
+</head>
+<body>
+    <div id="jsoneditor" style="width: 400px; height: 400px;"></div>
+
+    <script>
+        // create the editor
+        const container = document.getElementById("jsoneditor")
+        const options = {}
+        const editor = new JSONEditor(container, options)
+
+        // set json
+        const initialJson = {
+            "JDUserName": "karl@k-world.me.uk",
+            "JDPassword": "Grd.555269",
+            "RSSFeed": "https://rlsbb.cc/feed/",
+            "RSSFeedRefreshMins": 0.2,
+            "JDPostLinksMins": 0.3,
+            "Autostart": true,
+            "OnlyHEVC": true,
+            "Shows": [
+                {
+                    "Name": "Critter Fixers Country Vets",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "The Challenge",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Obi-Wan Kenobi",
+                    "Quality": "1080"
+                },
+                {
+                    "Name": "Taskmaster",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Ms Marvel",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Star Trek Strange New Worlds",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "The Flash 2014",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Gold Rush",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Hoffman Family Gold",
+                    "Quality": "720"
+                },
+                {
+                    "Name": "Love Island",
+                    "Quality": "720"
+                }
+            ]
+        }
+        editor.set(initialJson)
+
+        // get json
+        const updatedJson = editor.get()
+    </script>
+</body>
+</html>
