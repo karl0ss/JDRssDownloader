@@ -2,6 +2,7 @@ const fs = require('fs')
 const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
 const { checkFileName } = require('./checkFileName')
+const { checkDownloadHistory } = require('./checkDownloadHistory')
 
 async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
@@ -47,8 +48,13 @@ async function filterFeed() {
                     let download_list = urlObj.urlList
                     // Send Links to JDdownloader
                     if (download_list.length !== 0) {
-                        log.info(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader')
-                        linkAdder(download_list)
+                        if (checkDownloadHistory(urlObj)) {
+                            log.info(urlObj.fileName + ' already downloaded, skipped.')
+                            break
+                        } else {
+                            log.info(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
+                            linkAdder(download_list)
+                        }
                     } else {
                         // No HEVC links found
                         log.info(download_list.length + ' links for ' + show.Name + ' have been found, will recheck next time.')
