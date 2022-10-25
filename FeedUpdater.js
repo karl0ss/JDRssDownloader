@@ -20,7 +20,7 @@ async function feedUpdater() {
     // Save the file
     log.info(updatedArray.length + ' items in file cache')
     fs.writeFileSync('./feedCache.json', JSON.stringify(updatedArray));
-    global.rss_refresh_time = new Date();
+    global.rssRefreshTime = new Date();
 }
 
 module.exports = {

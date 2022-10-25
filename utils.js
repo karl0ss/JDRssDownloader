@@ -2,20 +2,21 @@ const fs = require('fs');
 config = JSON.parse(fs.readFileSync('config.json'))
 var moment = require('moment');
 
-
-function next_rss_refresh() {
-    var date1 = moment(global.rss_refresh_time);
-    date1.add(config.RSSFeedRefreshMins, 'm');
-    return new moment(date1).format("ddd, LTS")
+function returnUpdatedDate(date, offset) {
+    var newDate = moment(date);
+    newDate.add(offset, 'm');
+    return new moment(newDate).format("ddd, LTS")
 }
 
-function next_link_check() {
-    var date1 = moment(global.link_check_time);
-    date1.add(config.JDPostLinksMins, 'm');
-    return new moment(date1).format("ddd, LTS")
+function nextRssRefresh() {
+    return returnUpdatedDate(global.rssRefreshTime, config.RSSFeedRefreshMins)
+}
+
+function nextLinkCheck() {
+    return returnUpdatedDate(global.linkCheckTime, config.JDPostLinksMins)
 }
 
 module.exports = {
-    next_rss_refresh, next_link_check
+    nextRssRefresh, nextLinkCheck
 }
 

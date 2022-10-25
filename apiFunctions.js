@@ -18,7 +18,7 @@ async function addNewShow(showData) {
         })
         try {
             fs.writeFileSync('config.json', JSON.stringify(config));
-            log.info(showData.showName + ' Added to the list, checking for ' + showData.quality + 'p' )
+            log.info(showData.showName + ' Added to the list, checking for ' + showData.quality + 'p')
         } catch (err) {
             console.error(err);
         }
@@ -35,7 +35,7 @@ async function removeShow(showData) {
     config.Shows = myArray
     try {
         fs.writeFileSync('config.json', JSON.stringify(config));
-        log.info(showData.showName + ' Removed from tracking list.' )
+        log.info(showData.showName + ' Removed from tracking list.')
     } catch (err) {
         console.error(err);
     }

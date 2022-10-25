@@ -1,11 +1,9 @@
 const fs = require("fs");
+config = JSON.parse(fs.readFileSync('config.json'))
+
 const { feedUpdater } = require('./FeedUpdater')
 const { filterFeed } = require('./FeedFilter')
 const { telegrambot } = require('./telegramCommunication')
-const { addNewShow, removeShow } = require('./apiFunctions')
-const { next_rss_refresh, next_link_check } = require('./utils')
-const version = require('./package.json').version;
-config = JSON.parse(fs.readFileSync('config.json'))
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -18,15 +16,16 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-pass = config.AdminPassword
+require('./routes')(app);
 app.use(basicAuth({
-    users: { 'admin': pass },
+    users: { 'admin': config.AdminPassword },
     challenge: true,
 }))
-const port = config.WebUIPort;
 
-global.rss_refresh_time = new Date();
-global.link_check_time = new Date();
+global.rssRefreshTime = new Date();
+global.linkCheckTime = new Date();
+global.version = require('./package.json').version;
+
 global.log = require('simple-node-logger').createSimpleLogger({
     logFilePath: 'jdrssdownloader.log',
     timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
@@ -42,60 +41,17 @@ log.tele = function () {
     });
 };
 
-app.get("/", (req, res) => {
-    showListLength = JSON.parse(fs.readFileSync('config.json')).Shows.length
-    a =
-        res.render("index", { title: "Home", showListLength: showListLength, version: version, rss_time: next_rss_refresh(), link_check: next_link_check() });
-});
-
-app.get("/shows", (req, res) => {
-    showList = JSON.parse(fs.readFileSync('config.json')).Shows
-    res.render("shows", { title: "Show List", showList: showList });
-});
-
-app.get("/shows/add", (req, res) => {
-    res.render("addshow", { title: "Add Show" });
-});
-
-app.get("/shows/remove", (req, res) => {
-    showList = JSON.parse(fs.readFileSync('config.json')).Shows
-    res.render("removeshow", { title: "Remove Show", showList: showList });
-});
-
-app.get("/logs", (req, res) => {
-    const lineReader = require("line-reader");
-    const Promise = require("bluebird");
-    logFile = []
-    const eachLine = Promise.promisify(lineReader.eachLine);
-    eachLine('jdrssdownloader.log', function (line) {
-        logFile.push(line)
-    }).then(() => {
-        logFile = logFile.slice((logFile.length - 50), logFile.length)
-        res.render("logs", { title: "App Logs", logFile: logFile });
-    });
-});
-
-app.post('/addNewShow', (req, res) => {
-    addNewShow(req.body)
-    res.redirect("/shows");
-});
-
-app.post('/removeShow', (req, res) => {
-    removeShow(req.body)
-    res.redirect("/shows");
-});
-
 async function main() {
-    log.tele('Running JDRssDownloader version ' + version)
+    log.tele('Running JDRssDownloader version ' + global.version)
     try {
-        RSSFeedRefreshMins = JSON.parse(fs.readFileSync('config.json')).RSSFeedRefreshMins
-        JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
+        RSSFeedRefreshMins = config.RSSFeedRefreshMins
+        JDPostLinksMins = config.JDPostLinksMins
     } catch (error) {
         log.error('config.json file is missing.')
     }
     log.tele('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
     log.tele('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
-    app.listen(port, () => log.info(`WebUi is listening on ${port}!`))
+    app.listen(config.WebUIPort, () => log.info(`WebUi is listening on ${config.WebUIPort}!`))
     setInterval(await feedUpdater, RSSFeedRefreshMins * 60000);
     setInterval(await filterFeed, JDPostLinksMins * 60000);
 }
