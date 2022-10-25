@@ -14,6 +14,7 @@
     "cheerio": "^1.0.0-rc.11",
     "jdownloader-client": "^1.0.0",
     "lodash": "^4.17.21",
+    "node-telegram-bot-api": "^0.59.0",
     "rss-parser": "^3.12.0",
     "simple-node-logger": "^21.8.12"
   },
