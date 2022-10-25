@@ -29,19 +29,9 @@ global.log = require('simple-node-logger').createSimpleLogger({
     timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
 });
 
-log.info = function() {
+log.tele = function() {
     var args = Array.prototype.slice.call( arguments ),
         entry = log.log('info', args);
-    process.nextTick(function() {
-        if (config.TelegramBot) {
-            telegrambot(entry.msg[0])
-    }
-    });
-};
-
-log.error = function() {
-    var args = Array.prototype.slice.call( arguments ),
-        entry = log.log('error', args);
     process.nextTick(function() {
         if (config.TelegramBot) {
             telegrambot(entry.msg[0])
@@ -92,15 +82,15 @@ app.post('/removeShow', (req, res) => {
 });
 
 async function main() {
-    log.info('Running JDRssDownloader version ' + version)
+    log.tele('Running JDRssDownloader version ' + version)
     try {
         RSSFeedRefreshMins = JSON.parse(fs.readFileSync('config.json')).RSSFeedRefreshMins
         JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
     } catch (error) {
         log.error('config.json file is missing.')
     }
-    log.info('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
-    log.info('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
+    log.tele('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
+    log.tele('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
     app.listen(port, () => log.info(`WebUi is listening on ${port}!`))
     setInterval(await feedUpdater, RSSFeedRefreshMins * 60000);
     setInterval(await filterFeed, JDPostLinksMins * 60000);

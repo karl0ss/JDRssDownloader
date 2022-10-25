@@ -52,7 +52,7 @@ async function filterFeed() {
                             log.info(urlObj.fileName + ' already downloaded, skipped.')
                             break
                         } else {
-                            log.info(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
+                            log.tele(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
                             linkAdder(download_list)
                         }
                     } else {
