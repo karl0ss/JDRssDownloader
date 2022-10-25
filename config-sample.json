@@ -1,6 +1,8 @@
 {
     "JDUserName": "",
     "JDPassword": "",
+    "AdminPassword":"",
+    "WebUIPort": 3100,
     "RSSFeed": "",
     "RSSFeedRefreshMins": 10,
     "JDPostLinksMins": 180,

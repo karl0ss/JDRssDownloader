@@ -3,7 +3,6 @@ const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
 const { checkFileName } = require('./checkFileName')
 const { checkDownloadHistory } = require('./checkDownloadHistory')
-const { telegrambot } = require('./telegramCommunication')
 
 async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
@@ -54,9 +53,6 @@ async function filterFeed() {
                             break
                         } else {
                             log.info(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
-                            if (TelegramBotConfig) {
-                                telegrambot(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
-                            }
                             linkAdder(download_list)
                         }
                     } else {

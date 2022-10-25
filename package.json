@@ -12,9 +12,14 @@
   "dependencies": {
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.11",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-basic-auth": "^1.2.1",
     "jdownloader-client": "^1.0.0",
+    "line-reader": "^0.4.0",
     "lodash": "^4.17.21",
     "node-telegram-bot-api": "^0.59.0",
+    "pug": "^3.0.2",
     "rss-parser": "^3.12.0",
     "simple-node-logger": "^21.8.12"
   },
