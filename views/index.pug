@@ -1,0 +1,18 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner JDRssDownloader #{version}
+    body
+      div.Message
+        h3 Number of Tracked Shows
+        h1 #{showListLength}
+    div.NavButtons
+      a(href="/shows")
+          div.NavButton Show List
+      a(href="/shows/add")
+          div.NavButton Add New Show
+      a(href="/shows/remove")
+          div.NavButton Remove Show
+      a(href="/logs")
+          div.NavButton Logs

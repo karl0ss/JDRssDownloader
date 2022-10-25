@@ -1,0 +1,15 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Remove Show
+    div.Message
+      form(action="/removeShow" method="POST")
+        p Show Name: 
+          select(name="showName")
+            each show in showList
+                option(value=show.Name) #{show.Name}
+        input(type="submit", value="Remove Show")
+    div.NavButtons
+      a(href="/")
+          div.NavButton Home
