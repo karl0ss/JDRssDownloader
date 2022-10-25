@@ -54,6 +54,7 @@ async function filterFeed() {
                         } else {
                             log.tele(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
                             linkAdder(download_list)
+                            global.link_check_time = new Date();
                         }
                     } else {
                         // No HEVC links found
@@ -61,6 +62,7 @@ async function filterFeed() {
                         for (let feed_item of list_filtered_for_show) {
                             retry_show_cache.push(feed_item)
                         }
+                        global.link_check_time = new Date();
                     }
                 }
             } else {
@@ -69,10 +71,12 @@ async function filterFeed() {
             }
         } catch (error) {
             log.error('Something went wrong ' + error)
+            global.link_check_time = new Date();
         }
     }
     log.info('Wiping feed cache')
     fs.writeFileSync('./feedCache.json', JSON.stringify(retry_show_cache));
+    global.link_check_time = new Date();
 }
 
 module.exports = {

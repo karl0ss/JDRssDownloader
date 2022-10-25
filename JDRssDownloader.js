@@ -3,6 +3,7 @@ const { feedUpdater } = require('./FeedUpdater')
 const { filterFeed } = require('./FeedFilter')
 const { telegrambot } = require('./telegramCommunication')
 const { addNewShow, removeShow } = require('./apiFunctions')
+const { next_rss_refresh, next_link_check } = require('./utils')
 const version = require('./package.json').version;
 config = JSON.parse(fs.readFileSync('config.json'))
 const express = require('express');
@@ -24,24 +25,27 @@ app.use(basicAuth({
 }))
 const port = config.WebUIPort;
 
+global.rss_refresh_time = new Date();
+global.link_check_time = new Date();
 global.log = require('simple-node-logger').createSimpleLogger({
     logFilePath: 'jdrssdownloader.log',
     timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
 });
 
-log.tele = function() {
-    var args = Array.prototype.slice.call( arguments ),
+log.tele = function () {
+    var args = Array.prototype.slice.call(arguments),
         entry = log.log('info', args);
-    process.nextTick(function() {
+    process.nextTick(function () {
         if (config.TelegramBot) {
             telegrambot(entry.msg[0])
-    }
+        }
     });
 };
 
 app.get("/", (req, res) => {
     showListLength = JSON.parse(fs.readFileSync('config.json')).Shows.length
-    res.render("index", { title: "Home", showListLength:showListLength, version:version });
+    a =
+        res.render("index", { title: "Home", showListLength: showListLength, version: version, rss_time: next_rss_refresh(), link_check: next_link_check() });
 });
 
 app.get("/shows", (req, res) => {
@@ -55,7 +59,7 @@ app.get("/shows/add", (req, res) => {
 
 app.get("/shows/remove", (req, res) => {
     showList = JSON.parse(fs.readFileSync('config.json')).Shows
-    res.render("removeshow", { title: "Remove Show",  showList: showList });
+    res.render("removeshow", { title: "Remove Show", showList: showList });
 });
 
 app.get("/logs", (req, res) => {
@@ -67,7 +71,7 @@ app.get("/logs", (req, res) => {
         logFile.push(line)
     }).then(() => {
         logFile = logFile.slice((logFile.length - 50), logFile.length)
-     res.render("logs", { title: "App Logs",  logFile: logFile });
+        res.render("logs", { title: "App Logs", logFile: logFile });
     });
 });
 

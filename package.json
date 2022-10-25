@@ -18,6 +18,7 @@
     "jdownloader-client": "^1.0.0",
     "line-reader": "^0.4.0",
     "lodash": "^4.17.21",
+    "moment": "^2.29.4",
     "node-telegram-bot-api": "^0.59.0",
     "pug": "^3.0.2",
     "rss-parser": "^3.12.0",
