@@ -1,0 +1,17 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Add Show
+    div.Message
+      form(action="/addNewShow" method="POST")
+        p Show Name: 
+          input(type="text" name="showName" placeholder="Enter the show to track ")
+        p Quality: 
+          select(name="quality")
+            option(value='720') #{'720p'}
+            option(value='1080') #{'1080p'}
+        input(type="submit", value="Add Show")
+    div.NavButtons
+      a(href="/")
+          div.NavButton Home

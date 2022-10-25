@@ -1,0 +1,19 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Show List
+    div.Message
+      table
+        thead
+          tr
+           th Show Name
+           th Quality
+        tbody
+          each val, key in showList
+            tr
+              td= val.Name
+              td= val.Quality
+    div.NavButtons
+      a(href="/")
+          div.NavButton Home

@@ -3,68 +3,66 @@ const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
 const { checkFileName } = require('./checkFileName')
 const { checkDownloadHistory } = require('./checkDownloadHistory')
-const { telegrambot } = require('./telegramCommunication')
 
 async function filterFeed() {
     let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
     let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
-    let retry_show_cache = []
-    let urls_to_check = []
+    let retryShowCache = []
+    let urlsToCheck = []
 
 
     for (let show of myshowlist) {
 
         try {
             // Find show on feed
-            let list_filtered_for_show = feed.filter(item => item.title.includes(show.Name))
-            if (list_filtered_for_show.length > 0) {
-                for (let match of list_filtered_for_show) {
+            let listFilteredForShow = feed.filter(item => item.title.includes(show.Name))
+            if (listFilteredForShow.length > 0) {
+                for (let match of listFilteredForShow) {
                     // If show is found get url then return all links on that page
-                    let full_link_list_from_page = await getLinksFromURL(match.link)
+                    let fullLinkListFromPage = await getLinksFromURL(match.link)
                     if (hevcSwitch) {
                         // Only get urls with HEVC in name
-                        urls_to_check = full_link_list_from_page.filter(item => item.includes('HEVC'))
-                        if (urls_to_check.length == 0) {
+                        urlsToCheck = fullLinkListFromPage.filter(item => item.includes('HEVC'))
+                        if (urlsToCheck.length == 0) {
                             // If no urls with HEVC check for H265
-                            urls_to_check = full_link_list_from_page.filter(item => item.includes('H265'))
+                            urlsToCheck = fullLinkListFromPage.filter(item => item.includes('H265'))
                         }
                     } else {
-                        urls_to_check = full_link_list_from_page
+                        urlsToCheck = fullLinkListFromPage
                     }
                     // Only keep urls that match show quality
-                    let urls_with_quality_in_url = urls_to_check.filter(item => item.includes(show.Quality))
+                    let urlsWithQualityInUrl = urlsToCheck.filter(item => item.includes(show.Quality))
                     // Remove any url trying to direct to a torrent site search
-                    let urls_without_torrent_in_url = urls_with_quality_in_url.filter(item => !item.includes('torrent'))
+                    let urlsWithoutTorrentInUrl = urlsWithQualityInUrl.filter(item => !item.includes('torrent'))
                     // Remove any url that doesn't include MeGusta
                     if (hevcSwitch) {
-                        pre_nitroFlare = urls_without_torrent_in_url.filter(item => item.includes('MeGusta'))
+                        preNitroflare = urlsWithoutTorrentInUrl.filter(item => item.includes('MeGusta'))
                     } else {
-                        pre_nitroFlare = urls_without_torrent_in_url
+                        preNitroflare = urlsWithoutTorrentInUrl
                     }
                     // NitroFlare doesn't group with the rest of the links in JD, remove them.
-                    let remove_nitroflare = pre_nitroFlare.filter(item => !item.includes('nitro'))
+                    let removeNitroflare = preNitroflare.filter(item => !item.includes('nitro'))
                     // Do some stuff
-                    urlObj = checkFileName(remove_nitroflare)
-                    let download_list = urlObj.urlList
+                    urlObj = checkFileName(removeNitroflare)
+                    let downloadList = urlObj.urlList
                     // Send Links to JDdownloader
-                    if (download_list.length !== 0) {
+                    if (downloadList.length !== 0) {
                         if (checkDownloadHistory(urlObj)) {
                             log.info(urlObj.fileName + ' already downloaded, skipped.')
                             break
                         } else {
-                            log.info(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
-                            if (TelegramBotConfig) {
-                                telegrambot(download_list.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
-                            }
-                            linkAdder(download_list)
+                            log.tele(downloadList.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
+                            linkAdder(downloadList)
+                            global.linkCheckTime = new Date();
                         }
                     } else {
                         // No HEVC links found
-                        log.info(download_list.length + ' links for ' + show.Name + ' have been found, will recheck next time.')
-                        for (let feed_item of list_filtered_for_show) {
-                            retry_show_cache.push(feed_item)
+                        log.info(downloadList.length + ' links for ' + show.Name + ' have been found, will recheck next time.')
+                        for (let feedItem of listFilteredForShow) {
+                            retryShowCache.push(feedItem)
                         }
+                        global.linkCheckTime = new Date();
                     }
                 }
             } else {
@@ -73,10 +71,12 @@ async function filterFeed() {
             }
         } catch (error) {
             log.error('Something went wrong ' + error)
+            global.linkCheckTime = new Date();
         }
     }
     log.info('Wiping feed cache')
-    fs.writeFileSync('./feedCache.json', JSON.stringify(retry_show_cache));
+    fs.writeFileSync('./feedCache.json', JSON.stringify(retryShowCache));
+    global.linkCheckTime = new Date();
 }
 
 module.exports = {

@@ -19,11 +19,16 @@ There is a `config-sample.json` file that needs to be renamed to `config.json`, 
 
 - JDUserName - Your MyJDownloader Username
 - JDPassword - Your MyJDownloader Password
+- AdminPassword - Password to be set for the WebUI
+- WebUIPort - Port for the WebUI to run on
 - RSSFeed - The url to the rss feed you want to watch (Only tested with - rlsbb)
 - RSSFeedRefreshMins - How often to poll your rss feed down to local file cache
 - JDPostLinksMins - How often to check your file cache for your shows and send found links to JDownloader
 - Autostart - Tells JDownloader to add and start the downloads straight away (true/false)
 - OnlyHEVC - If false, this will download any files that it finds on the post that matches the quality (true/false)
+- TelegramBot - Set to true if you wish to have updates sent via telegramBot
+- TelegramBotID - Set this to the id you recieve from TheBotFather
+- TelegramChatID - Chat or Group ID for the bot to send messages to
 - Shows - This needs to be a comma separated list of json objects of the show and quality you want to check for.
 
 An example shown below
@@ -32,11 +37,16 @@ An example shown below
 {
     "JDUserName": "User",
     "JDPassword": "Pass",
+    "AdminPassword":"",
+    "WebUIPort": 3100,
     "RSSFeed": "https://mypage.com/feed/",
     "RSSFeedRefreshMins": 10,
     "JDPostLinksMins": 180,
     "Autostart": false,
     "OnlyHEVC": true,
+    "TelegramBot": true,
+    "TelegramBotID":"",
+    "TelegramChatID":123456789,
     "Shows": [
         {
             "Name": "Obi-Wan Kenobi",

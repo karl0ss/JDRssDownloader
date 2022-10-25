@@ -1,0 +1,22 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner JDRssDownloader #{version}
+    body
+      div.Message
+        h3 Number of Tracked Shows
+        h1 #{showListLength}
+        h3 Next RSS Refresh
+        h1 #{rssTime}
+        h3 Next Link Check
+        h1 #{linkCheck}        
+    div.NavButtons
+      a(href="/shows")
+          div.NavButton Show List
+      a(href="/shows/add")
+          div.NavButton Add New Show
+      a(href="/shows/remove")
+          div.NavButton Remove Show
+      a(href="/logFile")
+          div.NavButton Logs

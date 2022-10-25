@@ -1,0 +1,11 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Log File
+    div.Message
+      each val in logFile
+        li= val
+    div.NavButtons
+      a(href="/")
+          div.NavButton Home

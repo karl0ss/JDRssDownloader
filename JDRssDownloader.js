@@ -1,37 +1,57 @@
 const fs = require("fs");
+config = JSON.parse(fs.readFileSync('config.json'))
+
 const { feedUpdater } = require('./FeedUpdater')
 const { filterFeed } = require('./FeedFilter')
 const { telegrambot } = require('./telegramCommunication')
-const version = require('./package.json').version;
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const path = require("path");
+const basicAuth = require('express-basic-auth')
+const app = express();
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+require('./routes')(app);
+app.use(basicAuth({
+    users: { 'admin': config.AdminPassword },
+    challenge: true,
+}))
 
-global.TelegramBotConfig = JSON.parse(fs.readFileSync('config.json')).TelegramBot
+global.rssRefreshTime = new Date();
+global.linkCheckTime = new Date();
+global.version = require('./package.json').version;
 
 global.log = require('simple-node-logger').createSimpleLogger({
     logFilePath: 'jdrssdownloader.log',
     timestampFormat: 'YYYY-MM-DD HH:mm:ss.SSS'
 });
 
-async function main() {
-    log.info('Running JDRssDownloader version ' + version)
+log.tele = function () {
+    var args = Array.prototype.slice.call(arguments),
+        entry = log.log('info', args);
+    process.nextTick(function () {
+        if (config.TelegramBot) {
+            telegrambot(entry.msg[0])
+        }
+    });
+};
 
-    if (TelegramBotConfig) {
-        telegrambot('Running JDRssDownloader version ' + version)
-    }
+async function main() {
+    log.tele('Running JDRssDownloader version ' + global.version)
     try {
-        RSSFeedRefreshMins = JSON.parse(fs.readFileSync('config.json')).RSSFeedRefreshMins
-        JDPostLinksMins = JSON.parse(fs.readFileSync('config.json')).JDPostLinksMins
+        RSSFeedRefreshMins = config.RSSFeedRefreshMins
+        JDPostLinksMins = config.JDPostLinksMins
     } catch (error) {
         log.error('config.json file is missing.')
     }
-    log.info('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
-    if (TelegramBotConfig) {
-        telegrambot('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
-    }
-    log.info('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
-    if (TelegramBotConfig) {
-        telegrambot('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
-    }
-
+    log.tele('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
+    log.tele('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
+    app.listen(config.WebUIPort, () => log.info(`WebUi is listening on ${config.WebUIPort}!`))
     setInterval(await feedUpdater, RSSFeedRefreshMins * 60000);
     setInterval(await filterFeed, JDPostLinksMins * 60000);
 }
