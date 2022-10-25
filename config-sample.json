@@ -8,6 +8,7 @@
     "JDPostLinksMins": 180,
     "Autostart": false,
     "OnlyHEVC": true,
+    "TelegramBot": true,
     "TelegramBotID":"",
     "TelegramChatID":123456789,
     "Shows": [
