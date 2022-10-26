@@ -3,7 +3,7 @@ const { addNewShow, removeShow } = require('.././apiFunctions')
 
 module.exports = function (app) {
     app.get("/shows", (req, res) => {
-        showList = JSON.parse(fs.readFileSync('config.json')).Shows
+        showList = JSON.parse(fs.readFileSync('shows.json'))
         res.render("shows", { title: "Show List", showList: showList });
     });
 
@@ -12,7 +12,7 @@ module.exports = function (app) {
     });
 
     app.get("/shows/remove", (req, res) => {
-        showList = JSON.parse(fs.readFileSync('config.json')).Shows
+        showList = JSON.parse(fs.readFileSync('shows.json'))
         res.render("removeshow", { title: "Remove Show", showList: showList });
     });
 

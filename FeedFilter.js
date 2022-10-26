@@ -5,8 +5,8 @@ const { checkFileName } = require('./checkFileName')
 const { checkDownloadHistory } = require('./checkDownloadHistory')
 
 async function filterFeed() {
-    let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
+    let myshowlist = JSON.parse(fs.readFileSync('shows.json'))
     let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
     let retryShowCache = []
     let urlsToCheck = []
