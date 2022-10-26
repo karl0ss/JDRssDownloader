@@ -7,7 +7,7 @@ const { checkDownloadHistory } = require('./checkDownloadHistory')
 async function filterFeed() {
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
     let myshowlist = JSON.parse(fs.readFileSync('shows.json'))
-    let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
+    let feed = JSON.parse(fs.readFileSync('./cache/feedCache.json'));
     let retryShowCache = []
     let urlsToCheck = []
 
@@ -75,7 +75,7 @@ async function filterFeed() {
         }
     }
     log.info('Wiping feed cache')
-    fs.writeFileSync('./feedCache.json', JSON.stringify(retryShowCache));
+    fs.writeFileSync('./cache/feedCache.json', JSON.stringify(retryShowCache));
     global.linkCheckTime = new Date();
 }
 
