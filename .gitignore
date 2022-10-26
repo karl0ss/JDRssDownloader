@@ -9,3 +9,4 @@ dist/jdrssdownloader-linux
 dist/jdrssdownloader-win.exe
 dist/jdrssdownloader-macos
 downloadHistory.json
+shows.json
