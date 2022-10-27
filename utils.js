@@ -16,7 +16,13 @@ function nextLinkCheck() {
     return returnUpdatedDate(global.linkCheckTime, config.JDPostLinksMins)
 }
 
+function get_last_downloaded(){
+    history = JSON.parse(fs.readFileSync('./cache/downloadHistory.json'))
+    last = history.slice(-1)[0] 
+    return last
+}
+
 module.exports = {
-    nextRssRefresh, nextLinkCheck
+    nextRssRefresh, nextLinkCheck, get_last_downloaded
 }
 

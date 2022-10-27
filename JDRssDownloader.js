@@ -25,7 +25,6 @@ app.use(basicAuth({
 global.rssRefreshTime = new Date();
 global.linkCheckTime = new Date();
 global.version = require('./package.json').version;
-global.lastDownloadedLink = 'None'
 
 global.log = require('simple-node-logger').createSimpleLogger({
     logFilePath: 'jdrssdownloader.log',

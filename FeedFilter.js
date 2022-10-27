@@ -55,7 +55,6 @@ async function filterFeed() {
                             log.tele(downloadList.length + ' links for ' + urlObj.fileName + ' have been sent to JDdownloader.')
                             linkAdder(downloadList)
                             global.linkCheckTime = new Date();
-                            global.lastDownloadedLink = urlObj.fileName
                         }
                     } else {
                         // No HEVC links found

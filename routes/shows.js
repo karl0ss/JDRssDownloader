@@ -1,5 +1,7 @@
 const fs = require("fs");
 const { addNewShow, removeShow, editShow } = require('.././apiFunctions')
+const { check, validationResult } = require('express-validator');
+
 
 module.exports = function (app) {
     app.get("/shows", (req, res) => {
@@ -21,10 +23,19 @@ module.exports = function (app) {
         res.render("editShow", { title: "Edit Show", showList: showList });
     });
 
-    app.post('/addNewShow', (req, res) => {
-        addNewShow(req.body)
-        res.redirect("/shows");
-    });
+    app.post('/addNewShow', [
+        check('showName')
+            .isLength({ min: 1 })
+    ], (req, res) => {
+        if (validationResult(req).isEmpty()) {
+            addNewShow(req.body)
+            res.redirect("/shows");
+        } else {
+            log.error('You cannot add a show without a name.')
+            res.redirect("/shows");
+        }
+    }
+    );
 
     app.post('/removeShow', (req, res) => {
         removeShow(req.body)

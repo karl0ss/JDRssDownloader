@@ -1,6 +1,6 @@
 {
   "name": "jdrssdownloader",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "JDRssDownloader.js",
   "bin": "JDRssDownloader.js",
@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-basic-auth": "^1.2.1",
+    "express-validator": "^6.14.2",
     "jdownloader-client": "^1.0.0",
     "line-reader": "^0.4.0",
     "lodash": "^4.17.21",

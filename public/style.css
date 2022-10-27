@@ -97,9 +97,15 @@ a {
 
 .Message {
   background: white;
-  padding: 30px;
+  border-radius: 5px;
+  padding: 20px;
   border-bottom: var(--ui-shadow-border);
   box-shadow: var(--ui-shadow);
+  overflow-x: hidden;
+  overflow-y: auto;
+  /* text-align: center; */
+  margin-top:10px;
+  margin-bottom:10px;
 }
 
 .Message > .Title {
