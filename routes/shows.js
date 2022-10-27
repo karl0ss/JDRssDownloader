@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { addNewShow, removeShow } = require('.././apiFunctions')
+const { addNewShow, removeShow, editShow } = require('.././apiFunctions')
 
 module.exports = function (app) {
     app.get("/shows", (req, res) => {
@@ -16,6 +16,11 @@ module.exports = function (app) {
         res.render("removeshow", { title: "Remove Show", showList: showList });
     });
 
+    app.get("/shows/edit", (req, res) => {
+        showList = JSON.parse(fs.readFileSync('shows.json'))
+        res.render("editShow", { title: "Edit Show", showList: showList });
+    });
+
     app.post('/addNewShow', (req, res) => {
         addNewShow(req.body)
         res.redirect("/shows");
@@ -23,6 +28,11 @@ module.exports = function (app) {
 
     app.post('/removeShow', (req, res) => {
         removeShow(req.body)
+        res.redirect("/shows");
+    });
+
+    app.post('/editShow', (req, res) => {
+        editShow(req.body)
         res.redirect("/shows");
     });
 }

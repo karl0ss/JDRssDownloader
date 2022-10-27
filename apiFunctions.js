@@ -41,7 +41,27 @@ async function removeShow(showData) {
     }
 }
 
+
+async function editShow(showData) {
+    let shows = JSON.parse(fs.readFileSync('shows.json'))
+    for (let index = 0; index < shows.length; index++) {
+        const element = shows[index];
+        if (element.Name == showData.showName) {
+            shows[index] = {
+                "Name": showData.showName,
+                "Quality": showData.quality
+            }
+        }
+    }
+    try {
+        fs.writeFileSync('shows.json', JSON.stringify(shows));
+        log.info(showData.showName + ' Quality modified to ' + showData.quality + 'p')
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
-    addNewShow, removeShow
+    addNewShow, removeShow, editShow
 }
 

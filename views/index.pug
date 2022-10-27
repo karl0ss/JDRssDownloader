@@ -7,6 +7,8 @@ block layout-content
       div.Message
         h3 Number of Tracked Shows
         h1 #{showListLength}
+        h3 Last Downloaded
+        h1 #{lastDownloaded}            
         h3 Next RSS Refresh
         h1 #{rssTime}
         h3 Next Link Check
@@ -16,6 +18,8 @@ block layout-content
           div.NavButton Show List
       a(href="/shows/add")
           div.NavButton Add New Show
+      a(href="/shows/edit")
+          div.NavButton Edit Show          
       a(href="/shows/remove")
           div.NavButton Remove Show
       a(href="/logFile")

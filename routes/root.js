@@ -7,6 +7,6 @@ module.exports = function (app) {
         showListLength = JSON.parse(fs.readFileSync('shows.json')).length
         rssTime = nextRssRefresh()
         linkCheck = nextLinkCheck()
-        res.render("index", { title: "Home", showListLength: showListLength, version: global.version, rssTime: rssTime, linkCheck: linkCheck });
+        res.render("index", { title: "Home", showListLength: showListLength, version: global.version, rssTime: rssTime, linkCheck: linkCheck, lastDownloaded: global.lastDownloadedLink });
     });
 }
