@@ -3,12 +3,14 @@ const { linkAdder } = require('./JDLinkAdder');
 const { getLinksFromURL } = require('./LinkGrabber')
 const { checkFileName } = require('./checkFileName')
 const { checkDownloadHistory } = require('./checkDownloadHistory')
+const { retryCache } = require('./retryCache')
 
 async function filterFeed() {
-    let myshowlist = JSON.parse(fs.readFileSync('config.json')).Shows
     let hevcSwitch = JSON.parse(fs.readFileSync('config.json')).OnlyHEVC
-    let feed = JSON.parse(fs.readFileSync('./feedCache.json'));
-    let retryShowCache = []
+    let myshowlist = JSON.parse(fs.readFileSync('shows.json'))
+    let rssFeed = JSON.parse(fs.readFileSync('./cache/feedCache.json'));
+    let retryCacheData = retryCache()
+    let fullFeedToCheck = retryCacheData.concat(rssFeed)
     let urlsToCheck = []
 
 
@@ -16,7 +18,7 @@ async function filterFeed() {
 
         try {
             // Find show on feed
-            let listFilteredForShow = feed.filter(item => item.title.includes(show.Name))
+            let listFilteredForShow = fullFeedToCheck.filter(item => item.title.includes(show.Name))
             if (listFilteredForShow.length > 0) {
                 for (let match of listFilteredForShow) {
                     // If show is found get url then return all links on that page
@@ -60,7 +62,7 @@ async function filterFeed() {
                         // No HEVC links found
                         log.info(downloadList.length + ' links for ' + show.Name + ' have been found, will recheck next time.')
                         for (let feedItem of listFilteredForShow) {
-                            retryShowCache.push(feedItem)
+                            retryCache(feedItem)
                         }
                         global.linkCheckTime = new Date();
                     }
@@ -75,7 +77,7 @@ async function filterFeed() {
         }
     }
     log.info('Wiping feed cache')
-    fs.writeFileSync('./feedCache.json', JSON.stringify(retryShowCache));
+    fs.writeFileSync('./cache/feedCache.json', JSON.stringify([]));
     global.linkCheckTime = new Date();
 }
 

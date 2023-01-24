@@ -1,0 +1,26 @@
+extends layout
+
+block layout-content
+  div.View
+    h1.Banner Feed Cache
+    if (feedCache.length==0)
+      div.Message
+        h2 No shows in Feed Cache
+    else
+      div.Message
+        table
+          thead
+            tr
+              th Show Name
+              //- th Remove
+          tbody
+            each val, key in feedCache
+              tr
+                td
+                  a(href=val.link
+                    target="_blank") #{val.title}
+                //- td 
+                //-   a(href='/retryCache/remove?name=' + val.newtitle) Remove
+    div.NavButtons
+      a(href="/")
+        div.NavButton Home
