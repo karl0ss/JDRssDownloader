@@ -8,11 +8,18 @@ block layout-content
         h2 Number of Tracked Shows
         h3 #{showListLength}
         h2 Last Downloaded
-        h3 #{lastDownloaded}            
+        h3 #{lastDownloaded}             
+      div.Message
+        h2 
+          a(href='/feedCache') RSS Feed Cache Size 
+        h3 #{feedCacheLength}
+        h2
+          a(href='/retryCache') Retry Cache Size
+        h3 #{retryCacheLength}
         h2 Next RSS Refresh
         h3 #{rssTime}
         h2 Next Link Check
-        h3 #{linkCheck}        
+        h3 #{linkCheck}   
     div.NavButtons
       a(href="/shows")
           div.NavButton Show List

@@ -1,9 +1,9 @@
 const fs = require("fs");
 config = JSON.parse(fs.readFileSync('config.json'))
-
 const { feedUpdater } = require('./FeedUpdater')
 const { filterFeed } = require('./FeedFilter')
 const { telegrambot } = require('./telegramCommunication')
+const { create_empty_cache_files } = require('./utils')
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -52,6 +52,7 @@ async function main() {
     log.tele('Refreshing RSS Items every ' + RSSFeedRefreshMins + ' Minutes')
     log.tele('Checking for links and sending to JDdownloader every ' + JDPostLinksMins + ' Minutes')
     app.listen(config.WebUIPort, () => log.info(`WebUi is listening on ${config.WebUIPort}!`))
+    create_empty_cache_files()
     setInterval(await feedUpdater, RSSFeedRefreshMins * 60000);
     setInterval(await filterFeed, JDPostLinksMins * 60000);
 }

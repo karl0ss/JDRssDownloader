@@ -61,7 +61,24 @@ async function editShow(showData) {
     }
 }
 
+async function removeShowFromCache(showData) {
+    let shows = JSON.parse(fs.readFileSync('./cache/retryCache.json'))
+
+    myArray = shows.filter(function (obj) {
+        return obj.title !== showData;
+    });
+
+    shows = myArray
+    try {
+        fs.writeFileSync('./cache/retryCache.json', JSON.stringify(shows));
+        log.info(showData + ' Removed from retry cache.')
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+
 module.exports = {
-    addNewShow, removeShow, editShow
+    addNewShow, removeShow, editShow, removeShowFromCache
 }
 

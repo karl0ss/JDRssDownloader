@@ -10,3 +10,5 @@ dist/jdrssdownloader-win.exe
 dist/jdrssdownloader-macos
 downloadHistory.json
 shows.json
+shows.json
+cache/retryCache.json
