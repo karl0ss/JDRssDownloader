@@ -1,7 +1,7 @@
 const axios = require('axios');
 var cheerio = require('cheerio');
 
-async function flareSolve(url) {
+async function flareSolverr(url) {
     var data = JSON.stringify({
         "cmd": "request.get",
         "url": url,
@@ -23,7 +23,7 @@ async function getLinksFromURL(url) {
 
     try {
         let links = [];
-        let scrape = await flareSolve(url)
+        let scrape = await flareSolverr(url)
         // let httpResponse = await axios.get(url);
 
         let $ = cheerio.load(scrape);
