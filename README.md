@@ -65,38 +65,22 @@ There is a `config-sample.json` file that needs to be renamed to `config.json`, 
 
 An example shown below
 
-  
 
 ```
-
 {
-
 "JDUserName": "User",
-
 "JDPassword": "Pass",
-
 "AdminPassword":"",
-
 "WebUIPort": 3100,
-
 "RSSFeed": "https://mypage.com/feed/",
-
 "RSSFeedRefreshMins": 10,
-
 "JDPostLinksMins": 180,
-
 "Autostart": false,
-
 "OnlyHEVC": true,
-
 "TelegramBot": true,
-
 "TelegramBotID":"",
-
 "TelegramChatID":123456789,
-
 }
-
 ```
 
   
