@@ -1,6 +1,6 @@
 {
   "name": "jdrssdownloader",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "main": "JDRssDownloader.js",
   "bin": "JDRssDownloader.js",
