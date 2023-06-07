@@ -40,9 +40,19 @@ function create_empty_retry_cache() {
     }
 }
 
+function create_empty_shows_file() {
+    try {
+        return JSON.parse(fs.readFileSync('./shows.json'));
+    } catch (error) {
+        fs.writeFileSync('./shows.json', JSON.stringify([]));
+        return JSON.parse(fs.readFileSync('./shows.json'));
+    }
+}
+
 function create_empty_cache_files() {
     create_empty_downloadHistory()
     create_empty_retry_cache()
+    create_empty_shows_file() 
 }
 
 module.exports = {

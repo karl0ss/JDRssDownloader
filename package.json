@@ -1,6 +1,6 @@
 {
   "name": "jdrssdownloader",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "main": "JDRssDownloader.js",
   "bin": "JDRssDownloader.js",
@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.2",
     "cheerio": "^1.0.0-rc.11",
     "cors": "^2.8.5",
     "express": "^4.18.2",
